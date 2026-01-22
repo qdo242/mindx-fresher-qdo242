@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.next/
+out/
+
+# Environment & Secrets
+.env
+.env.local
+*-secret.yaml
+*.pem
+
+# IDE & OS files
+.vscode/
+.DS_Store
