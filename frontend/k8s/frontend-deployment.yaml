@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      imagePullSecrets:
+      - name: acr-secret
+      containers:
+      - name: frontend-app
+        
+        image: quanregistry2026.azurecr.io/frontend-app:v2.3
+        ports:
+        - containerPort: 3000 
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  type: ClusterIP 
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80 
+      targetPort: 3000 
