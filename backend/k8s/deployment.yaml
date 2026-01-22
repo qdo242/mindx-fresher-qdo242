@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-api
+  template:
+    metadata:
+      labels:
+        app: backend-api
+    spec:
+      containers:
+      - name: api-container
+        image: quanregistry2026.azurecr.io/backend-api:v2.9
+        imagePullPolicy: Always 
+        ports:
+        - containerPort: 3000
+        env:
+          - name: PORT
+            value: "3000"
+          - name: CLIENT_ID
+            value: "mindx-onboarding"
+          - name: OIDC_ISSUER
+            value: "https://id-dev.mindx.edu.vn"
+          - name: REDIRECT_URI
+            value: "https://135.171.144.185.nip.io/api/auth/callback"
+          
+        
+          - name: CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: auth-secrets
+                key: CLIENT_SECRET
+          - name: SESSION_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: auth-secrets
+                key: SESSION_SECRET
+          
+         
+          - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: auth-secrets
+                key: APPLICATIONINSIGHTS_CONNECTION_STRING
+        
+        resources:           
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
+        
+        # Kiểm tra trạng thái container
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          
+      imagePullSecrets:      
+      - name: acr-secret 

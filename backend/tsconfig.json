@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    /* File Layout */
+    "rootDir": "./src",      
+    "outDir": "./dist",    
+
+    /* Environment Settings */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "esModuleInterop": true, 
+
+    /* Output Quality */
+    "sourceMap": true,
+    "declaration": true,
+    "skipLibCheck": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "include": ["src/**/*"],   
+  "exclude": ["node_modules", "dist"]
+}

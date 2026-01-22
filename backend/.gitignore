@@ -1,0 +1,9 @@
+.env
+build/
+node_modules/
+dist/
+/auth-secret.yaml
+
+#OS files
+.DS.Store
+Thumbs.db
